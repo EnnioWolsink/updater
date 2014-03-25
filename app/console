@@ -1,0 +1,25 @@
+#!/usr/bin/env php
+<?php
+
+use Symfony\Component\Console\Application;
+use Rimote\Updater\Command\UpdateCommand;
+use Rimote\Updater\Command\RollbackCommand;
+
+/*
+Note: use absolute paths (using __DIR__) so we can run this script
+in any directory.
+*/
+
+require __DIR__ . '/bootstrap.php';
+
+// Set up environment
+error_reporting(-1);
+
+// Grab the service container
+$c = require PATH_APP . '/container.php';
+
+// Create console application and run
+$app = new Application();
+$app->add(new UpdateCommand(null, $c['logger'], $c['update']));
+$app->add(new RollbackCommand(null, $c['logger'], $c['rollback']));
+$app->run();
