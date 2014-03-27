@@ -23,22 +23,13 @@ You can download Composer using:
 
     $ curl -s https://getcomposer.org/installer | php
     
-This will install a composer.phar script in the current directory. This file can be added to .gitignore, so you can keep it locally. Execute it using:
-
-    $ php composer.phar
-    
-When installing Updater for the first time, remember to install all vendor software first using:
-
-    $ php composer.phar install
-    
-Remember to periodically run the following command to update vendor software:
-
-    $ php composer.phar update
+This will install a composer.phar script in the current directory. This file can be added to .gitignore, so you can keep it locally.
 
 ## Usage
 
-Run the app from the command line using `app/console`. See `--help` for a
-list of commands.
+Run the app from the command line using `app/console`. Use the following to see a list of commands:
+
+    $ app/console list
 
 ### Pushing Notifications
 
@@ -52,7 +43,11 @@ list of commands.
 This project requires PHP 5.3+. All external libraries can be installed
 using Composer:
 
-    $ composer install # Install all dependencies to your machine
+    $ php composer.phar install # Install all dependencies to your machine
+    
+Remember to periodically run the following command to update vendor software:
+
+    $ php composer.phar update
 
 ### Tests
 
