@@ -1,18 +1,16 @@
 <?php
 
-namespace Rimote\Updater\Util;
+namespace Rimote\Updater\Util\Database;
 
 use Rimote\Updater\Updater\Exception\UnexpectedException;
 use Rimote\Updater\Util\BaseIterator;
 
-class ParseDatabaseDump extends BaseIterator
+class Commands extends BaseIterator
 {
     protected $container = array();
     protected $position = 0;
     
     /**
-     * Constructor
-     *
      * Load database dump file into class memory
      */
     public function __construct($db_dumpfile)

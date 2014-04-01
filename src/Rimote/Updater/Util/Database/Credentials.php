@@ -1,11 +1,11 @@
 <?php
 
-namespace Rimote\Updater\Util;
+namespace Rimote\Updater\Util\Database;
 
 use Rimote\Updater\Updater\Exception\UnexpectedException;
 use Rimote\Updater\Util\BaseIterator;
 
-class DatabaseCredentials extends BaseIterator
+class Credentials extends BaseIterator
 {
     protected $container = array();
     protected $position = 0;
@@ -21,8 +21,8 @@ class DatabaseCredentials extends BaseIterator
         }
         
         // Note: using require_once breaks the unit test
-        foreach (require $config_file as $credential) {
-            $this->container[] = $credential;
+        foreach (require $config_file as $key => $credential) {
+            $this->container[$key] = $credential;
         }
     }
 }

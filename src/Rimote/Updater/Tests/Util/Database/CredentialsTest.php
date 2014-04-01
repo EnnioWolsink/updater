@@ -5,9 +5,9 @@ namespace Rimote\Updater\Tests\Util;
 use PHPUnit_Framework_TestCase;
 
 use Rimote\Updater\Updater\Exception\UnexpectedException;
-use Rimote\Updater\Util\DatabaseCredentials;
+use Rimote\Updater\Util\Database\Credentials;
 
-class DatabaseCredentialsTest extends PHPUnit_Framework_TestCase
+class CredentialsTest extends PHPUnit_Framework_TestCase
 {
     public function testFetchDatabaseCredentials()
     {
@@ -30,7 +30,7 @@ EOT;
         file_put_contents($temp_file, $mock_db_credentials);
         
         // Load config and check if we can iterate the object
-        $db_credentials = new DatabaseCredentials($temp_file);
+        $db_credentials = new Credentials($temp_file);
         
         try {
             foreach (require $temp_file as $key => $db_credential) {
