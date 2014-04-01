@@ -3,18 +3,12 @@
 namespace Rimote\Updater\Util;
 
 use Rimote\Updater\Updater\Exception\UnexpectedException;
+use Rimote\Updater\Util\BaseIterator;
 
-class ParseDatabaseDump implements \Iterator
+class ParseDatabaseDump extends BaseIterator
 {
-    /**
-     * Container that contains all database commands
-     */
-    private $container = array();
-    
-    /**
-     * Position tracker
-     */
-    private $position = 0;
+    protected $container = array();
+    protected $position = 0;
     
     /**
      * Constructor
@@ -41,30 +35,5 @@ class ParseDatabaseDump implements \Iterator
         }
         
         $this->position = 0;
-    }
-    
-    public function rewind()
-    {
-        $this->position = 0;
-    }
- 
-    public function valid()
-    {
-        return array_key_exists($this->position, $this->container);
-    }
- 
-    public function key()
-    {
-        return $this->position;
-    }
- 
-    public function current()
-    {
-        return $this->container[$this->position];
-    }
- 
-    public function next()
-    {
-        ++$this->position;
     }
 }

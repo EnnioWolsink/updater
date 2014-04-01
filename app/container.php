@@ -4,34 +4,31 @@
  */
 
 // Use a function to minimize modifying the scope
-$_c = function()
+$_container = function()
 {
-    $ns = 'Rimote\\Updater';
+    $name_space = 'Rimote\\Updater';
+    $container = new Pimple();
     
-    $config = require __DIR__ . '/config/config.php';
-    
-    $c = new Pimple();
-    
-    $c['logger_class'] = $ns . '\\Util\\Logger';
-    $c['logger'] = $c->factory(function($c) {
-        return new $c['logger_class']();
+    $container['logger_class'] = $name_space . '\\Util\\Logger';
+    $container['logger'] = $container->factory(function($container) {
+        return new $container['logger_class']();
     });
     
-    $c['update_class'] = $ns . '\\Updater\\Update';
-    $c['update'] = $c->factory(function($c) {
-        return new $c['update_class'](
-            $c['logger']
+    $container['update_class'] = $name_space . '\\Updater\\Update';
+    $container['update'] = $container->factory(function($container) {
+        return new $container['update_class'](
+            $container['logger']
         );
     });
     
-    $c['rollback_class'] = $ns . '\\Updater\\Rollback';
-    $c['rollback'] = $c->factory(function($c) {
-        return new $c['rollback_class'](
-            $c['logger']
+    $container['rollback_class'] = $name_space . '\\Updater\\Rollback';
+    $container['rollback'] = $container->factory(function($container) {
+        return new $container['rollback_class'](
+            $container['logger']
         );
     });
     
-    return $c;
+    return $container;
 };
 
-return $_c();
+return $_container();

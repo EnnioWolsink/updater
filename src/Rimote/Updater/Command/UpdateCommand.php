@@ -10,6 +10,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use Rimote\Updater\Updater\Update;
 use Rimote\Updater\Updater\Exception\UpdateException;
+
+use Rimote\Updater\Util\DatebaseConfig;
 use Rimote\Updater\Util\Logger;
 
 class UpdateCommand extends Command
@@ -52,7 +54,7 @@ class UpdateCommand extends Command
         
         // Attempt to put it all together
         try {
-            $db_credentials = new DatabaseConfig($update_directory); // TDD
+            $db_credentials = new DatabaseCredentials($update_directory);
             $db_commands = new DBCommandsContainer($update_directory); // TDD
             
             $pdo = new DatabaseConnection($db_credentials); // TDD
