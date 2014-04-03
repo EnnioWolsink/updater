@@ -32,14 +32,27 @@ class Update
      */
     public function run(\PDO $pdo, Commands $db_commands)
     {
+        $exception = null;
+        
         // Run each database command
         foreach ($db_commands as $db_command) {
             try {
                 $pdo->query($db_command);
             } catch (\PDOException $e) {
-                throw new UpdateException("FATAL ERROR: the following query failed:" 
-                    . $db_command . " Reason: " . $e->getMessage());
+                $previous_exception = (!is_null($exception)) ? $exception : null;
+                $exception = new UpdateException(
+                    $e->getMessage(),
+                    $previous_exception
+                );
             }
+        }
+        
+        // Re-throw any buffered exceptions
+        if(!is_null($exception) > 0) {
+            throw new UpdateException(
+                "One or more queries failed", 
+                $exception
+            );
         }
         
         return true;

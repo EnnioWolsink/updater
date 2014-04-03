@@ -10,6 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use Rimote\Updater\Updater\Update;
 use Rimote\Updater\Updater\Exception\UpdateException;
+use Rimote\Updater\Updater\Exception\LoggerException;
 
 use Rimote\Updater\Util\Database\Commands;
 use Rimote\Updater\Util\Database\Connection;
@@ -27,6 +28,7 @@ class UpdateCommand extends Command
     const DS = DIRECTORY_SEPARATOR;
     const DB_CREDENTIALS = 'db_credentials.php';
     const DB_DUMPFILE = 'db_changes.sql';
+    const LOG_FILE = 'updater.log';
     
     public function __construct($name = null,
         Logger $logger,
@@ -34,6 +36,7 @@ class UpdateCommand extends Command
     {
         parent::__construct($name);
         $this->update = $update;
+        $this->logger = $logger;
     }
     
     protected function configure()
@@ -66,12 +69,18 @@ class UpdateCommand extends Command
             $credentials = new Credentials($update_directory . self::DS . 
                 self::DB_CREDENTIALS);
             $connection = new Connection($credentials);
-            $commands = new Commands($update_directory);
+            $commands = new Commands($update_directory . self::DS . 
+                self::DB_DUMPFILE);
             
             // Run update
             $update->run($connection->getHandle(), $commands);
         } catch (UpdateException $e) {
-            $output->writeln('<error>ERROR: ' . $e->getMessage() . '</error>');
+            $this->logger->setFile(self::LOG_FILE);
+            $this->logger->log($e->getAllMessages(array('stack_traces' => true)));
+            $this->logger->write();
+            
+            $output->writeln('<error>ERROR: ' . $e->getMessage() . 
+                "\n" . 'Check ' . self::LOG_FILE . ' for details.</error>');
             exit;
         }
         

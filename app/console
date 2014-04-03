@@ -4,6 +4,7 @@
 use Symfony\Component\Console\Application;
 use Rimote\Updater\Command\UpdateCommand;
 use Rimote\Updater\Command\RollbackCommand;
+use Rimote\Updater\Updater\Exception\UpdaterException;
 
 /*
 Note: use absolute paths (using __DIR__) so we can run this script
@@ -14,6 +15,9 @@ require __DIR__ . '/bootstrap.php';
 
 // Set up environment
 error_reporting(-1);
+
+// Set up exception handler
+set_exception_handler('Rimote\Updater\Updater\Exception\UpdaterException::handleException');
 
 // Grab the service container
 $c = require PATH_APP . '/container.php';

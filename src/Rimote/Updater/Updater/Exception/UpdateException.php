@@ -2,6 +2,6 @@
 
 namespace Rimote\Updater\Updater\Exception;
 
-use Exception;
+use Rimote\Updater\Updater\Exception\UpdaterException;
 
-class UpdateException extends Exception {}
+class UpdateException extends UpdaterException {}
