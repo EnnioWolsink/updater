@@ -48,7 +48,7 @@ class Update
         }
         
         // Re-throw any buffered exceptions
-        if(!is_null($exception) > 0) {
+        if(!is_null($exception)) {
             throw new UpdateException(
                 "One or more queries failed", 
                 $exception
