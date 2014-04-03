@@ -1,3 +1,4 @@
 /vendor
 /phpunit-reports
 updater.log
+composer.phar
