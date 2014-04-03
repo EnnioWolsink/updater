@@ -15,11 +15,35 @@ In the future the following tasks will be supported:
 
 ## Config
 
-### Application Config
+### Update packages
 
-Copy and customize the following files (removing the `.dist` extension):
+Updater expects you to provide a version number as well as a path to a local directory with update packages. Each update package is a subdirectory containing a credentials file, as well as SQL schemas for updating and/or rollbacking the database.
 
-- `app/config/config.php.dist`
+For example:
+
+    updates
+     |
+     \--- 1.2.0 
+     |      |
+     |      \--- db_credentials.php
+     |      \--- db_changes.sql
+     |      \--- db_rollback.sql
+     \--- 1.2.1
+     |     |
+     |     \--- db_credentials.php
+     |     \--- db_changes.sql
+     |     \--- db_rollback.sql
+    etc...
+
+The SQL files must contain fully formed SQL commands that PHP's PDO::query() method can execute independently, one at a time.
+
+The db_credentials.php needs to return an array like so:
+
+    return array(
+        'dsn' => 'mysql:dbname=database_name;host=hostname',
+        'username' => 'username',
+        'password' => 'password'
+    );
 
 ### Install PHP composer
 You can download Composer using:
