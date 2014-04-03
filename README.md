@@ -1,14 +1,17 @@
 
 # Updater
 
-Update utility that can be called by a deployment script, able to perform installation specific configuration, database updates and/or rollbacks.
+PHP command line utility that can be called by a deployment script, able to perform installation specific configuration, database updates and/or rollbacks.
 
 It performs the following tasks:
 
-- Determine the next version to update to by scanning a directory structure
-- Perform MySQL operations required to update and/or rollback the database of a project's installation to a newer version
-- Update and/or rollback configuration files
+- Perform database operations using PDO, required to update and/or rollback the database of a project's installation to a newer version
 
+In the future the following tasks will be supported:
+
+- Process custom PHP update scripts
+- Rollback/update multiple versions in a chain
+- Surgical rollback by keeping track of the individual steps in an update that failed
 
 ## Config
 
@@ -31,9 +34,13 @@ Run the app from the command line using `app/console`. Use the following to see 
 
     $ app/console list
 
-### Pushing Notifications
+### Run update
 
-    $ app/console update
+    $ app/console update <version_number> <path/to/updates/directory>
+    
+### Perform rollback
+
+    $ app/console rollback <version_number> <path/to/updates/directory>
 
 
 ## Developer Guide
@@ -51,10 +58,13 @@ Remember to periodically run the following command to update vendor software:
 
 ### Tests
 
-Run the tests using PHPUnit. Make sure to use the `phpunit.xml` config
-file in the `app` directory, using the `-c` option:
+Run the tests using PHPUnit:
 
-    $ phpunit -c app
+    $ phpunit
+    
+Generate code coverage HTML:
+
+    $ phpunit --coverage-html ./phpunit-reports
 
 ## Troubleshooting
 
